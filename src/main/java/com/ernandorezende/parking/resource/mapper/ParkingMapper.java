@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import com.ernandorezende.parking.model.Parking;
+import com.ernandorezende.parking.resource.dto.ParkingCreateDTO;
 import com.ernandorezende.parking.resource.dto.ParkingDTO;
 
 @Component
@@ -20,5 +21,9 @@ public class ParkingMapper {
 	
 	public List<ParkingDTO> toParkingDTOList(List<Parking> parkingList){
 		return parkingList.stream().map(this::parkingDTO).collect(Collectors.toList());
+	}
+
+	public Parking parkingCreateDTOToPrking(ParkingCreateDTO parkingCreateDTO) {
+		return MODEL_MAPPER.map(parkingCreateDTO, Parking.class);
 	}
 }
