@@ -23,7 +23,7 @@ public class ParkingMapper {
 		return parkingList.stream().map(this::parkingDTO).collect(Collectors.toList());
 	}
 
-	public Parking parkingCreateDTOToPrking(ParkingCreateDTO parkingCreateDTO) {
+	public Parking parkingCreateDTOToParking(ParkingCreateDTO parkingCreateDTO) {
 		return MODEL_MAPPER.map(parkingCreateDTO, Parking.class);
 	}
 }

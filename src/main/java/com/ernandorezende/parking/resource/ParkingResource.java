@@ -23,7 +23,7 @@ import com.ernandorezende.parking.service.ParkingService;
 @RequestMapping("/parking")
 public class ParkingResource {
 	
-	private ParkingService parkingService;
+	private final ParkingService parkingService;
 	private final ParkingMapper parkingMapper;
 	
 	public ParkingResource(ParkingService parkingService, ParkingMapper parkingMapper){
@@ -46,16 +46,15 @@ public class ParkingResource {
 		return ResponseEntity.ok(result);
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@DeleteMapping("/{id}")
-	public ResponseEntity delete(@PathVariable String id){
+	public ResponseEntity<Void> delete(@PathVariable String id){
 		 parkingService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PostMapping
 	public ResponseEntity<ParkingDTO> create(@RequestBody ParkingCreateDTO parkingCreateDTO){
-		Parking parking = parkingMapper.parkingCreateDTOToPrking(parkingCreateDTO);
+		Parking parking = parkingMapper.parkingCreateDTOToParking(parkingCreateDTO);
 		parking = parkingService.create(parking);
 		ParkingDTO parkingDTO = parkingMapper.parkingDTO(parking);
 		return ResponseEntity.status(HttpStatus.CREATED).body(parkingDTO);
@@ -63,8 +62,15 @@ public class ParkingResource {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<ParkingDTO> update(@RequestBody ParkingCreateDTO parkingCreateDTO, @PathVariable String id){
-		Parking parking = parkingMapper.parkingCreateDTOToPrking(parkingCreateDTO);
+		Parking parking = parkingMapper.parkingCreateDTOToParking(parkingCreateDTO);
 		parking = parkingService.update(parking, id);
+		ParkingDTO parkingDTO = parkingMapper.parkingDTO(parking);
+		return ResponseEntity.status(HttpStatus.OK).body(parkingDTO);
+	}
+	
+	@PutMapping("/{id}/exit")
+	public ResponseEntity<ParkingDTO> exit(@PathVariable String id){
+		Parking parking = parkingService.exit(id);
 		ParkingDTO parkingDTO = parkingMapper.parkingDTO(parking);
 		return ResponseEntity.status(HttpStatus.OK).body(parkingDTO);
 	}

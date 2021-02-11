@@ -16,16 +16,7 @@ import com.ernandorezende.parking.model.Parking;
 @Service
 public class ParkingService {
 
-	private static Map<String, Parking> parkingMap = new HashMap<>();
-	
-	static {
-		var id = getUUID();
-		var id2 = getUUID();
-		Parking parking = new Parking(id, "POQ-6368","MG","Mobi", "WHITE", null, null, null);
-		Parking parking2 = new Parking(id2, "POH-3368","MG","Corolla", "BLACK", null, null, null);
-		parkingMap.put(id, parking);
-		parkingMap.put(id2, parking2);
-	}
+	private static final Map<String, Parking> parkingMap = new HashMap<>();
 	
 	public List<Parking> findAll(){
 		return parkingMap.values().stream().collect(Collectors.toList());
@@ -60,5 +51,14 @@ public class ParkingService {
 		byID.setColor(parking.getColor());
 		parkingMap.put(byID.getId(), byID);
 		return byID;
+	}
+
+	public Parking exit(String id) {
+		Parking parking = findById(id);
+		parking.setExitDate(LocalDateTime.now());
+		parking.setBill(8.9);
+		parking.setState("CLOSED");
+		parkingMap.put(id, parking);
+		return parking;
 	}
 }
