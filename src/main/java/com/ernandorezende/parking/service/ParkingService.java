@@ -2,6 +2,7 @@ package com.ernandorezende.parking.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -34,6 +35,7 @@ public class ParkingService {
 
 	@Transactional
 	public Parking create(Parking parking) {
+		parking.setId(getUUID());
 		parking.setEntryDate(LocalDateTime.now());
 		return repository.save(parking);
 	}
@@ -64,5 +66,9 @@ public class ParkingService {
 		//Recuper Bill
 		
 		return null;
+	}
+	
+	private static String getUUID() {
+		return UUID.randomUUID().toString().replace("-", "");
 	}
 }
