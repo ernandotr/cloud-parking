@@ -62,8 +62,7 @@ public class ParkingResource {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<ParkingDTO> update(@RequestBody ParkingCreateDTO parkingCreateDTO, @PathVariable String id){
-		Parking parking = parkingMapper.parkingCreateDTOToParking(parkingCreateDTO);
-		parking = parkingService.update(parking, id);
+		Parking parking = parkingService.update(parkingCreateDTO, id);
 		ParkingDTO parkingDTO = parkingMapper.parkingDTO(parking);
 		return ResponseEntity.status(HttpStatus.OK).body(parkingDTO);
 	}

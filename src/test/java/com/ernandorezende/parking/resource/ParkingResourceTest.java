@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.hamcrest.Matchers;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ParkingResourceTest {
+class ParkingResourceTest extends AbstractContainerBase{
 
     @LocalServerPort
     private int randomPort;
