@@ -27,6 +27,7 @@ class ParkingResourceTest extends AbstractContainerBase{
     @Test
     void findAll() {
         RestAssured.given()
+        		.header("Authorization", "Basic dXNlcjpVc2VyQDEyMzQ1Ng==")
                 .when()
                 .get("/parking")
                 .then()
@@ -43,7 +44,8 @@ class ParkingResourceTest extends AbstractContainerBase{
     	createDTO.setModel("BRASILIA");
     	createDTO.setState("SP");
     	RestAssured.given()
-        .when()
+    	.header("Authorization", "Basic dXNlcjpVc2VyQDEyMzQ1Ng==")
+    	.when()
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .body(createDTO)
         .post("/parking")
